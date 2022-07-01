@@ -1,0 +1,4 @@
+Hello,
+Today begins pushin code for chrome extension for scraping ticket information for QA ticket logs
+Hope you finish it though
+Lezzgow!
