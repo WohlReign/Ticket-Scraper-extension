@@ -1,0 +1,14 @@
+    <table id="scraped-data">
+      <tr>
+        <td id="ticket-url"></td>
+        <td id="ticket-name">test1</td>
+        <td id="ticket-priority">test1</td>
+        <td id="ticket-result" >test1</td>
+        <td id="tester">test2</td>
+        <td id="integrator">test2</td>
+        <td id="result-promo">test2</td>
+        <td id="sx-code">test2</td>
+        <td id="month">test2</td>
+        <td id="timespent">test2</td>
+      </tr>
+    </table>
