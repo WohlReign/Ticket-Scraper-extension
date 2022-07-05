@@ -11,4 +11,6 @@
         <td id="month">test2</td>
         <td id="timespent">test2</td>
       </tr>
-    </table>
+    </table> var prior = document.getElementById('[id="priority-val"]');
+      var people = document.querySelectorAll('[id^="wl-"][id$="-d"]');
+      var sxcode = document.getElementById('[id^="customfield_"][id$="-val"]');

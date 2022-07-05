@@ -1,6 +1,6 @@
 body {
-  height: 500px;
-  width: 400px;
+  height: 250px;
+  width: 750px;
 }
 button {
     height: 30px;
@@ -8,17 +8,23 @@ button {
     border: black;
     border-radius: 2px;
 }
-#ticket-priority{
-  font-style: italic;
-  text-align: center;
+.divstyle{
+  background-color: aqua;
+  display: inline-block;
+  overflow: hidden;
+}
+.Result-choice{
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 5px;
 }
 table {
   border-collapse: collapse;
 }
-
 td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+    padding: 1px;
+    table-layout: fixed;
+    width: 100px;
 }
   

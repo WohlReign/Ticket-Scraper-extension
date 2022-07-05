@@ -4,23 +4,62 @@
     <link rel="stylesheet" href="button.css">
   </head>
   <body>
-    <button id="changeColor">EE</button>
-    <button id="to-clipboard">C</button>
-
-    <div id="modtest">eh</div>
+    <div style="width: 100%;">
+    <button id="changeColor" title="Generate">G</button>
+    <button id="to-clipboard" title="Copy">C</button>
+    <input type="text" placeholder="Integ" name="integ">
+    <label for="integ"></label>
+    <input type="text" placeholder="Timespent" name="timespent">
+    <label for="timespent"></label>
+    <button id="Permanent" style="float: right;" title="Add name permanently">P</button>
+    </div>
+    <div class="divstyle" style="width: 100px;">
+      
+      <label for="APAC">
+        <input class="Result-choice" type="radio" name="region" id="APAC" value="APAC">APAC
+      </label><br>
+      
+      <label for="EMEA">
+        <input class="Result-choice" type="radio" name="region" id="EMEA" value="EMEA">EMEA
+      </label>
+    </div>
+    <div class="divstyle" style="width: 200px;">
+      
+      <label for="Pass">
+        <input class="Result-choice" type="radio" name="result" id="Pass" value="Pass" checked="checked">Pass
+      </label><br>
+      
+      <label for="Fail">
+        <input class="Result-choice" type="radio" name="result" id="Fail" value="Fail">Fail
+      </label><br>
+       
+      <label for="Ticket_for_Confirmation">
+        <input class="Result-choice" type="radio" name="result" id="Ticket_for_Confirmation" value="Ticket for Confirmation">Ticket for Confirmation
+      </label>
+    </div>
+    
+    
+    <input id="Promo-check" type="checkbox" name="Promo"> 
+    <label for="Promo">Promo</label>
+    <input id="OT-check" type="checkbox" name="OT"> 
+    <label for="OT">OT</label>
     <table>
+      <!-- inline style not inherited, so repetetive styling, should find copy with css, maybe selectRange would work-->
+      <!-- too littered with inline styles lol-->
       <tbody id="scraped-data">
-        <tr>
-          <td id="ticket-url"></td>
-          <td id="ticket-name">test1</td>
-          <td id="ticket-priority">test1</td>
-          <td id="ticket-result" >test1</td>
-          <td id="tester">test2</td>
-          <td id="integrator">test2</td>
-          <td id="result-promo">test2</td>
-          <td id="sx-code">test2</td>
-          <td id="month">test2</td>
-          <td id="timespent">test2</td>
+        <tr style="border: 1px solid black;">
+          <td id="ticket-url" style="border: 1px solid black;">url</td>
+          <td id="ticket-name" style="border: 1px solid black;">name</td>
+          <td id="ticket-priority" style="text-align: center; border: 1px solid black">prio</td>
+          <td id="ticket-result" style="text-align: center; font-style: italic; border: 1px solid black">result</td>
+          <td> </td>
+          <td id="tester" style="text-align: center;  font-weight: bold; font-style: italic; border: 1px solid black;">Neldan</td>
+          <td id="integrator" style="text-align: center; font-weight: bold; font-style: italic; border: 1px solid black;"></td>
+          <td id="result-promo" style="text-align: center; border: 1px solid black;"> </td>
+          <td id="sx-code" style="border: 1px solid black;">sxcode</td>
+          <td id="month" style="border: 1px solid black; text-align: center;">month</td>
+          <td id="timespent" style="border: 1px solid black;"> </td>
+          <td id="OT-time" style="border: 1px solid black;"> </td>
         </tr>
       </tbody>
       
