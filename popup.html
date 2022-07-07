@@ -5,12 +5,20 @@
   </head>
   <body>
     <div style="width: 100%;">
+
     <button id="changeColor" title="Generate">G</button>
     <button id="to-clipboard" title="Copy">C</button>
+
+
     <input type="text" placeholder="Integ" name="integ">
     <label for="integ"></label>
-    <input type="text" placeholder="Timespent" name="timespent">
+
+    <input type="text" placeholder="Timespent" name="timespent" style="width: 50px;">
     <label for="timespent"></label>
+
+    <input type="text" placeholder="Remarks" name="remarks" style="display: none;">
+    <label for="remarks"></label>
+
     <button id="Permanent" style="float: right;" title="Add name permanently">P</button>
     </div>
     <div class="divstyle" style="width: 100px;">
@@ -34,35 +42,50 @@
       </label><br>
        
       <label for="Ticket_for_Confirmation">
-        <input class="Result-choice" type="radio" name="result" id="Ticket_for_Confirmation" value="Ticket for Confirmation">Ticket for Confirmation
+        <input class="Result-choice" type="radio" name="result" id="Ticket_for_confirmation" value="Ticket for confirmation">Ticket for confirmation
       </label>
     </div>
-    
     
     <input id="Promo-check" type="checkbox" name="Promo"> 
     <label for="Promo">Promo</label>
     <input id="OT-check" type="checkbox" name="OT"> 
     <label for="OT">OT</label>
+
     <table>
-      <!-- inline style not inherited, so repetetive styling, should find copy with css, maybe selectRange would work-->
-      <!-- too littered with inline styles lol-->
+      <!-- internal css for clipboard to copy style included-->
       <tbody id="scraped-data">
         <tr style="border: 1px solid black;">
-          <td id="ticket-url" style="border: 1px solid black;">url</td>
-          <td id="ticket-name" style="border: 1px solid black;">name</td>
-          <td id="ticket-priority" style="text-align: center; border: 1px solid black">prio</td>
-          <td id="ticket-result" style="text-align: center; font-style: italic; border: 1px solid black">result</td>
-          <td> </td>
-          <td id="tester" style="text-align: center;  font-weight: bold; font-style: italic; border: 1px solid black;">Neldan</td>
-          <td id="integrator" style="text-align: center; font-weight: bold; font-style: italic; border: 1px solid black;"></td>
-          <td id="result-promo" style="text-align: center; border: 1px solid black;"> </td>
-          <td id="sx-code" style="border: 1px solid black;">sxcode</td>
-          <td id="month" style="border: 1px solid black; text-align: center;">month</td>
-          <td id="timespent" style="border: 1px solid black;"> </td>
-          <td id="OT-time" style="border: 1px solid black;"> </td>
+          <style>
+            #OT-time {
+              color: rgb(0, 0, 0);
+            }
+            .heavy-font{
+              font-weight: bold;
+            }
+            .table-data {
+              border: 1px solid black;
+            }
+            .center-al{
+              text-align: center;
+            }
+            .right-al{
+              text-align: right;
+            }
+          </style>
+          <td id="ticket-url" class="table-data">URL</td>
+          <td id="ticket-name" class="table-data">Name</td>
+          <td id="ticket-priority" class="table-data center-al">Prio</td>
+          <td id="ticket-result" class="table-data center-al" style="font-style: italic;">Result</td>
+          <td id="ticket-remarks" class="table-data heavy-font center-al"> </td>
+          <td id="tester" class="table-data heavy-font center-al" style="font-style: italic;">Neldan</td>
+          <td id="integrator" class="table-data heavy-font center-al" style="font-style: italic;">Integ</td>
+          <td id="result-promo" class="table-data center-al" style="font-style: italic;"> </td>
+          <td id="sx-code" class="table-data" >SXCode</td>
+          <td id="month" class="table-data center-al">Month</td>
+          <td id="timespent" class="table-data right-al"> </td>
+          <td id="OT-time" class="table-data right-al"> </td>
         </tr>
       </tbody>
-      
     </table>
 
     <script src="popup.js"></script>

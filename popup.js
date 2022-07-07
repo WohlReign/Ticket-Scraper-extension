@@ -5,6 +5,7 @@ let addname =document.getElementById("Permanent");
 
 const d = new Date();
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+//Ext HTML selector
 let dpromo = document.getElementById("Promo-check");
 let dtime = document.getElementById("OT-check");
 
@@ -46,9 +47,13 @@ function setLocal (){
     setText("OT-time", " ");
   }
   
+  if (res === "Fail"){
+    document.getElementById("ticket-result").style.color = "red";
+  }
+
   if (dpromo.checked){
     setText("result-promo", res);
-  } else{
+  } else {
     setText("result-promo", " ");
   }
 }
@@ -93,23 +98,36 @@ function setPageBackgroundColor() {
     var element =  document.getElementById("summary-val");
     console.log(element.innerText);  
     teststring = element.innerText;
+    var prio_substring = "";
     var do_substring = "";
+
+    //DC Selectors
     var prior = document.getElementById('priority-val');
-    var people = document.querySelectorAll('[id^="wl-"][id$="-d"]');
+    var people = document.querySelectorAll('[id^="wl-"][id$="-d"]');// not needed since not scraping people
     var sxcode = document.querySelector('[title="Edit in dialog"]');
     do_substring = sxcode.innerText;
     var sxcode_string = " ";
-    
+
+
     const limiter = " ";
-      
+
+    prio_substring = prior.innerText;
+    //console.log(prio_substring.indexOf("Urgency"));// why doies it need a console log???
+    if (prio_substring.indexOf("Urgency") != -1){
+      prio_substring = "Urgency";
+    }
+
+    console.log("test1");
+
     if (do_substring.indexOf(" ")!= -1){
       if (do_substring.indexOf("PRJ-")!= -1){
         var prj_or_p = do_substring.indexOf(" ",do_substring.indexOf('PRJ-'));
         if (prj_or_p == -1){
-          sxcode_string = do_substring.substring(do_substring.indexOf('PRJ-'), do_substring.length-1);
+          sxcode_string = do_substring.substring(do_substring.indexOf('PRJ-'), do_substring.length);
+        }else{
+          sxcode_string = do_substring.substring(do_substring.indexOf('PRJ-'), prj_or_p);
         }
       }
-        
       }else{
         sxcode_string = sxcode.innerText;
       }
@@ -117,14 +135,15 @@ function setPageBackgroundColor() {
       /*
       document.addEventListener("DOMContentLoaded",  function(){
         console.log("test1");
-      console.log(sxcode.innerText);
+    
       console.log(prior.innerText);
       console.log(people[0].innerText);
       console.log(window.location.href);
       })*/
+      console.log(sxcode_string);
       console.log("test2");
       console.log(sxcode.innerText);
-      console.log(prior.innerText);
+      console.log(prio_substring);
      // console.log(people[0].innerText);
       console.log(window.location.href);
 
@@ -132,12 +151,13 @@ function setPageBackgroundColor() {
       console.log("Error reading");
 
     }
+    // maybe storage sync/local is better?
   chrome.runtime.sendMessage(
     {
       tx_name: element.innerText,
       tx_sxcode: sxcode_string,
       tx_url: window.location.href,
-      tx_priority: prior.innerText
+      tx_priority: prio_substring
     }, 
     
      function(response) {
