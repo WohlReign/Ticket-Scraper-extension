@@ -1,6 +1,11 @@
+
 body {
-  height: 250px;
+  height: 170px;
   width: 750px;
+  background-color: gray;
+  border: double black thick;
+  padding: 0%;
+  margin: 0%;
 }
 button {
     height: 30px;
@@ -8,23 +13,44 @@ button {
     border: black;
     border-radius: 2px;
 }
+
 .divstyle{
-  background-color: aqua;
+  background-color: rgba(150, 146, 146, 0.534);
   display: inline-block;
   overflow: hidden;
+ vertical-align: top;
+  margin: 5px 0;
 }
 .Result-choice{
   height: 100%;
-  display: table-cell;
+ 
   vertical-align: middle;
-  margin: 5px;
+}
+#ext-body{
+  align-self: center;
+  margin: 10px  auto 10px;
+  width: 95%;
+  
+  padding: 10px;
+  background-color: white;
+  border-radius: 40 px;
 }
 table {
   border-collapse: collapse;
+  table-layout: auto;
+  width: 100%;
 }
-td, th {
+#ticket-name, #ticket-url{
+  width: 100px;
+}
+.table-data {
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+td{
     padding: 1px;
-    table-layout: fixed;
     width: 100px;
 }
   

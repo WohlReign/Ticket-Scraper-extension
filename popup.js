@@ -2,24 +2,40 @@
 let changeColor = document.getElementById("changeColor");
 let copyclipboard = document.getElementById("to-clipboard");
 let addname =document.getElementById("Permanent");
+let failremarks = document.querySelectorAll('input[name="result"]');
+let lpcheck = document.getElementById("LP-check");
 
 const d = new Date();
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 //Ext HTML selector
 let dpromo = document.getElementById("Promo-check");
 let dtime = document.getElementById("OT-check");
+let dlp = document.getElementById("LP-check");
 
-var modif = document.getElementById("ticket-name");//modify so function can handle repetitive shit
-var modif_sxcode = document.getElementById("sx-code");
-var modif_priority = document.getElementById("ticket-priority");
-var modif_url = document.getElementById("ticket-url");
- 
-var teststring = "oh";
 
 chrome.storage.sync.get("color", ({ color }) => {
   changeColor.style.backgroundColor = color;
 });
 
+document.querySelectorAll('input[name="region"]').forEach((val) => 
+  val.addEventListener("change", function(result){
+    if (result.target.value === "APAC") {
+      document.getElementById("LP-hide").style.visibility = "visible";
+    } else {
+      document.getElementById("LP-hide").style.visibility = "hidden";
+    }
+  }
+));
+
+document.querySelectorAll('input[name="result"]').forEach((val) => 
+val.addEventListener("change", function(result){
+    if (result.target.value === "Fail") {
+      document.getElementById("Fremarks").style.display = "inline";
+    } else {
+      document.getElementById("Fremarks").style.display = "none";
+    }
+  }
+));
 
 changeColor.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -28,12 +44,14 @@ changeColor.addEventListener("click", async () => {
       target: { tabId: tab.id },
       function: setPageBackgroundColor,
     });
-  });
+});
   
 function setLocal (){
   var res = document.querySelector('input[name="result"]:checked').value;
+  var region = document.querySelector('input[name="region"]:checked').value;
   var integname = document.getElementsByName('integ');
   var timedata = document.getElementsByName('timespent');
+  var remarkdata = document.getElementsByName('remarks');
 
   setText("month", months[d.getMonth()]);
   setText("ticket-result", res);
@@ -49,6 +67,8 @@ function setLocal (){
   
   if (res === "Fail"){
     document.getElementById("ticket-result").style.color = "red";
+    document.getElementById("result-promo").style.color = "red";
+    setText("ticket-remarks", remarkdata[0].value);
   }
 
   if (dpromo.checked){
@@ -56,11 +76,42 @@ function setLocal (){
   } else {
     setText("result-promo", " ");
   }
+
+  chrome.storage.sync.get("username", data => {
+    setText("tester", data.username);
+  })
+
+  if (region === "APAC"){
+    var lpcell = document.getElementsByTagName("tr")[0];
+    lpcell.id = "cell-check";
+    var lptxt = lpcell.insertCell(0);
+    /*
+    if (!!document.getElementById("cell-check")) {
+      //do nothing
+    }else{
+
+    }*/
+
+    lptxt.style.border = "1px solid black";
+    if (dlp.checked) {
+      lptxt.innerText = "YES";
+    } else {
+      lptxt.innerText = "NO";
+    }
+  }
 }
-copyclipboard.addEventListener("click", function Te () {
+
+
+copyclipboard.addEventListener("click", function Ce () {
   var el = document.getElementById('scraped-data');
   selectElementContents(el.outerHTML);
 });
+
+
+addname.addEventListener("click", function() {
+  var text = document.getElementById("perma-name").value;
+  chrome.storage.sync.set({"username" : text},);
+})
 
 function selectElementContents(el) {
   var type = 'text/html';
@@ -77,16 +128,16 @@ chrome.runtime.onMessage.addListener(
     console.log(sender.tab ?
                   "from a content script:" + sender.tab.url :
                   "from the extension");
-    if (request)// === "hello"
+    if (request)
       setText("ticket-url",request.tx_url);
-      //  modif_url.innerHTML = request.tx_url;
-        modif_priority.innerHTML = request.tx_priority;
-        modif_sxcode.innerHTML = request.tx_sxcode;
-        modif.innerHTML = request.tx_name;
-        sendResponse({farewell: "goodbye"});
+      setText("sx-code", request.tx_sxcode);
+      setText("ticket-priority", request.tx_priority);
+      setText("ticket-name", request.tx_name);
+
+        sendResponse({farewell: "goodbye"});//callback most likely not sure if needed
       setLocal();
     }
-  );
+);
 
 function setText(eletext, eleid) {
   var setter = document.getElementById(eletext);
@@ -97,27 +148,22 @@ function setPageBackgroundColor() {
   try {
     var element =  document.getElementById("summary-val");
     console.log(element.innerText);  
-    teststring = element.innerText;
     var prio_substring = "";
     var do_substring = "";
 
     //DC Selectors
     var prior = document.getElementById('priority-val');
-    var people = document.querySelectorAll('[id^="wl-"][id$="-d"]');// not needed since not scraping people
     var sxcode = document.querySelector('[title="Edit in dialog"]');
+
     do_substring = sxcode.innerText;
     var sxcode_string = " ";
 
-
-    const limiter = " ";
-
     prio_substring = prior.innerText;
-    //console.log(prio_substring.indexOf("Urgency"));// why doies it need a console log???
+
     if (prio_substring.indexOf("Urgency") != -1){
       prio_substring = "Urgency";
     }
 
-    console.log("test1");
 
     if (do_substring.indexOf(" ")!= -1){
       if (do_substring.indexOf("PRJ-")!= -1){
@@ -127,31 +173,23 @@ function setPageBackgroundColor() {
         }else{
           sxcode_string = do_substring.substring(do_substring.indexOf('PRJ-'), prj_or_p);
         }
-      }
       }else{
-        sxcode_string = sxcode.innerText;
+        sxcode_string = sxcode.innerText;//temporary
       }
+    }else{
+        sxcode_string = sxcode.innerText;
+    }
       console.log("test2");
-      /*
-      document.addEventListener("DOMContentLoaded",  function(){
-        console.log("test1");
-    
-      console.log(prior.innerText);
-      console.log(people[0].innerText);
-      console.log(window.location.href);
-      })*/
       console.log(sxcode_string);
-      console.log("test2");
       console.log(sxcode.innerText);
       console.log(prio_substring);
-     // console.log(people[0].innerText);
       console.log(window.location.href);
 
     } catch (e) {
       console.log("Error reading");
 
     }
-    // maybe storage sync/local is better?
+    
   chrome.runtime.sendMessage(
     {
       tx_name: element.innerText,
@@ -162,9 +200,11 @@ function setPageBackgroundColor() {
     
      function(response) {
       console.log(response.farewell);
-  });
+});
+
+
 //extra stuff from extension tutorial kekw
-  chrome.storage.sync.get("color", ({ color }) => {
+chrome.storage.sync.get("color", ({ color }) => {
       document.body.style.backgroundColor = color;
   });
 }
