@@ -1,3 +1,2 @@
 This project is aimed only for use of the SFCC QA team in my internship1 for the 3TSY2122.
-for licenses, dont know that sheeet
-All rights reserved I guess
+* functionality complete *
